@@ -4,9 +4,18 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Allow frontend to call this API
 
-const OPENAI_KEY = process.env.OPENAI_KEY; // Your key stored safely in Render
+// Enable CORS for all domains
+app.use(cors({
+  origin: '*'
+}));
+
+// Your OpenAI API key stored safely in Render environment variables
+const OPENAI_KEY = process.env.OPENAI_KEY;
+
+app.get('/', (req, res) => {
+  res.send('Render AI Chat Backend is running.');
+});
 
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
